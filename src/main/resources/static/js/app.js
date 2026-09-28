@@ -173,6 +173,7 @@ async function deleteTeam(teamId) {
 
         showAlert('Team deleted successfully.', 'success');
         loadTeams();
+        loadFixtures();
         loadStandings();
     } catch (error) {
         showAlert('Unable to connect to the server. Please make sure Spring Boot is running.', 'error');
