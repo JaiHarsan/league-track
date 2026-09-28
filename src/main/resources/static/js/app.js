@@ -1,6 +1,7 @@
 // League Track Frontend JavaScript
 
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     initApp();
 });
 
@@ -10,6 +11,45 @@ function initApp() {
     loadStandings();
 }
 
+// ----------------------------------------------------
+// Light / Dark Theme Management
+// ----------------------------------------------------
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+
+    const label = document.getElementById('theme-toggle-label');
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    if (label) {
+        label.textContent = theme === 'dark' ? 'Light' : 'Dark';
+    }
+    if (sunIcon && moonIcon) {
+        if (theme === 'dark') {
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    }
+}
+
+// ----------------------------------------------------
+// Toast Alert Banner
+// ----------------------------------------------------
 function showAlert(message, type = 'success') {
     const alertBanner = document.getElementById('alert-banner');
     alertBanner.className = `alert-banner alert-${type}`;
@@ -184,7 +224,7 @@ function renderFixtures(fixtures) {
     if (!fixtures || fixtures.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
                 <p>No fixtures generated yet.</p>
                 <span>Register teams and click "Generate Fixtures" to get started.</span>
             </div>
