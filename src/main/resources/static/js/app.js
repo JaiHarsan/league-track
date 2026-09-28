@@ -155,7 +155,7 @@ async function addTeam(event) {
 }
 
 // ----------------------------------------------------
-// Delete Team
+// Delete Individual Team
 // ----------------------------------------------------
 async function deleteTeam(teamId) {
     if (!confirm('Are you sure you want to delete this team?')) return;
@@ -322,6 +322,41 @@ async function submitResult(event) {
         loadTeams();
     } catch (error) {
         console.error('Error submitting match result:', error);
+        showAlert('Unable to connect to the server. Please make sure Spring Boot is running.', 'error');
+    }
+}
+
+// ----------------------------------------------------
+// Tournament Reset Controls
+// ----------------------------------------------------
+function openResetModal() {
+    document.getElementById('reset-modal').classList.remove('hidden');
+}
+
+function closeResetModal() {
+    document.getElementById('reset-modal').classList.add('hidden');
+}
+
+async function confirmFinishTournament() {
+    try {
+        const response = await fetch('/api/tournament/reset', {
+            method: 'DELETE'
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            showAlert(data.message || 'Failed to reset tournament', 'error');
+            return;
+        }
+
+        closeResetModal();
+        showAlert('Tournament finished successfully. Ready for a new tournament.', 'success');
+        loadTeams();
+        loadFixtures();
+        loadStandings();
+    } catch (error) {
+        console.error('Error resetting tournament:', error);
         showAlert('Unable to connect to the server. Please make sure Spring Boot is running.', 'error');
     }
 }

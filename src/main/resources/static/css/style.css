@@ -18,6 +18,7 @@
     --success-color: #16A34A;
     --warning-color: #F59E0B;
     --danger-color: #DC2626;
+    --danger-hover: #B91C1C;
     --info-color: #2563EB;
 
     --badge-scheduled-bg: rgba(245, 158, 11, 0.12);
@@ -54,6 +55,7 @@
     --success-color: #22C55E;
     --warning-color: #F59E0B;
     --danger-color: #EF4444;
+    --danger-hover: #DC2626;
     --info-color: #60A5FA;
 
     --badge-scheduled-bg: rgba(245, 158, 11, 0.2);
@@ -150,7 +152,8 @@ body {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 /* Status Badge */
@@ -375,6 +378,14 @@ input:focus {
     color: #FFFFFF;
 }
 
+.btn-danger-solid {
+    background-color: var(--danger-color);
+    color: #FFFFFF;
+}
+.btn-danger-solid:hover {
+    background-color: var(--danger-hover);
+}
+
 .btn-sm {
     padding: 7px 13px;
     font-size: 0.82rem;
@@ -586,9 +597,7 @@ input:focus {
     color: var(--danger-color);
 }
 
-/* ========================================================
-   RESULT ENTRY MODAL (FIXED OVERFLOW & RESPONSIVE LAYOUT)
-   ======================================================== */
+/* Modals */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -617,11 +626,16 @@ input:focus {
     transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
+.modal-card-sm {
+    width: min(92vw, 480px);
+    max-width: 480px;
+}
+
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 12px;
 }
@@ -684,7 +698,6 @@ input:focus {
     flex-shrink: 0;
 }
 
-/* SCORE INPUTS GRID FIX: minmax(0, 1fr) prevents column overflow */
 .score-inputs-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -711,6 +724,42 @@ input:focus {
     gap: 12px;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* Modal Warning Content for Reset */
+.modal-body {
+    padding: 4px 0;
+}
+
+.modal-warning-title {
+    font-weight: 700;
+    color: var(--primary-text);
+    margin-bottom: 8px;
+    font-size: 0.98rem;
+}
+
+.modal-warning-text {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.warning-list {
+    margin-left: 24px;
+    color: var(--primary-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.warning-list li {
+    margin-bottom: 4px;
+}
+
+.modal-warning-note {
+    color: var(--danger-color);
+    font-weight: 600;
+    font-size: 0.85rem;
 }
 
 /* Mobile Modal Adjustments */
