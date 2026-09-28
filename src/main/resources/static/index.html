@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League Track - Intramural Sports Tournament</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navbar -->
+    <header class="navbar">
+        <div class="container navbar-content">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+                </div>
+                <div class="brand-text">
+                    <h1><span class="navy-text">LEAGUE</span><span class="green-text">TRACK</span></h1>
+                    <p>Intramural Sports Tournament Management System</p>
+                </div>
+            </div>
+            <div class="system-status">
+                <span id="status-badge" class="badge badge-success">
+                    <span class="status-dot"></span> System Ready
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <!-- Toast Notification Alert Banner -->
+        <div id="alert-banner" class="alert-banner hidden"></div>
+
+        <!-- Dashboard Stat Cards -->
+        <section class="dashboard-grid">
+            <div class="card stat-card">
+                <div class="stat-icon icon-teams">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-title">Total Teams</span>
+                    <h2 id="stat-total-teams">0</h2>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-icon icon-fixtures">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-title">Total Fixtures</span>
+                    <h2 id="stat-total-fixtures">0</h2>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-icon icon-matches">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-title">Completed Matches</span>
+                    <h2 id="stat-completed-matches">0</h2>
+                </div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-icon icon-upcoming">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-title">Upcoming Matches</span>
+                    <h2 id="stat-upcoming-matches">0</h2>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid-2-col">
+            <!-- Left Column: Team Registration & Teams List -->
+            <div class="left-column">
+                <section class="card">
+                    <div class="card-header">
+                        <h2>Register Team</h2>
+                    </div>
+                    <form id="team-form" onsubmit="addTeam(event)">
+                        <div class="form-group">
+                            <label for="team-name">Team Name</label>
+                            <div class="input-with-button">
+                                <input type="text" id="team-name" placeholder="e.g. Chennai Warriors" required>
+                                <button type="submit" class="btn btn-primary">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    Add Team
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="card mt-4">
+                    <div class="card-header">
+                        <h3>Registered Teams</h3>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Team Name</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teams-table-body">
+                                <tr><td colspan="3" class="text-center muted">No teams registered yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Fixtures & Schedule -->
+            <div class="right-column">
+                <section class="card">
+                    <div class="card-header flex-between">
+                        <h2>Fixtures & Schedule</h2>
+                        <button class="btn btn-primary btn-sm" onclick="generateFixtures()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+                            Generate Fixtures
+                        </button>
+                    </div>
+                    <div class="fixtures-list" id="fixtures-container">
+                        <div class="empty-state">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            <p>No fixtures generated yet.</p>
+                            <span>Register teams and click "Generate Fixtures" to get started.</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Full Width: Tournament Standings Table -->
+        <section class="card mt-4">
+            <div class="card-header flex-between">
+                <h2>League Standings</h2>
+                <button class="btn btn-secondary btn-sm" onclick="loadStandings()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                    Refresh Standings
+                </button>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table standings-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 70px;">Pos</th>
+                            <th>Team</th>
+                            <th class="text-center" style="width: 90px;">Played</th>
+                            <th class="text-center" style="width: 90px;">Won</th>
+                            <th class="text-center" style="width: 90px;">Draw</th>
+                            <th class="text-center" style="width: 90px;">Lost</th>
+                            <th class="text-center highlight-col" style="width: 100px;">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-table-body">
+                        <tr><td colspan="7" class="text-center muted">No standings data available.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Result Entry -->
+    <div id="result-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Record Match Result</h3>
+                <button class="close-btn" onclick="closeResultModal()">&times;</button>
+            </div>
+            <form id="result-form" onsubmit="submitResult(event)">
+                <input type="hidden" id="modal-match-id">
+                
+                <div class="teams-versus-card">
+                    <div class="team-box home-box">
+                        <span id="modal-home-team-name">Home Team</span>
+                    </div>
+                    <div class="vs-divider">VS</div>
+                    <div class="team-box away-box">
+                        <span id="modal-away-team-name">Away Team</span>
+                    </div>
+                </div>
+
+                <div class="score-inputs-grid">
+                    <div class="form-group text-center">
+                        <label for="modal-home-score">Home Score</label>
+                        <input type="number" id="modal-home-score" min="0" required placeholder="0" class="score-input">
+                    </div>
+                    <div class="form-group text-center">
+                        <label for="modal-away-score">Away Score</label>
+                        <input type="number" id="modal-away-score" min="0" required placeholder="0" class="score-input">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeResultModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Result</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
